@@ -2,7 +2,7 @@
 
 ## Flow
 
-### <Scheduler> ↔ <Arrangement Agent> ↔ <Bulk sending>
+### Scheduler ↔ Arrangement Agent ↔ Bulk sending
 
 ## Redis - category set마다 mail contents 동적 생성 X, 재활용
 
