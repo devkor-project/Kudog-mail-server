@@ -3,6 +3,7 @@ import { EmailParams, Sender, Recipient } from 'mailer-send-ts';
 import mailerSend from '@/api/utils/mailerSend';
 import { NextFunction, Request, Response } from 'express';
 import logger from '@/config/winston';
+import { redisCli } from '@/index';
 
 export async function sendMail(
     req: Request<Record<string, never>, Record<string, never>, { user: object }>,
@@ -38,12 +39,8 @@ export async function sendMail(
                 email: 'cksgh1735@gmail.com',
                 substitutions: [
                     {
-                        var: 'data',
-                        value: 'https://cs.korea.ac.kr/_res/editor_image/2022/10/OEuKOTXVtVmIfAQHhGzt.jpg',
-                    },
-                    {
                         var: 'html',
-                        value: '<h1>테스트입니다.</h1>'
+                        value: await redisCli.get('A')
                     }
                 ],
             },
@@ -53,12 +50,8 @@ export async function sendMail(
                 email: 'cksgh1735@naver.com',
                 substitutions: [
                     {
-                        var: 'data',
-                        value: 'https://cs.korea.ac.kr/_res/editor_image/2022/10/OEuKOTXVtVmIfAQHhGzt.jpg',
-                    },
-                    {
                         var: 'html',
-                        value: '<h1>테스트입니다.</h1>'
+                        value: await redisCli.get('A')
                     }
                 ],
             },
