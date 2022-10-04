@@ -19,6 +19,11 @@ export async function sendMail(
         // 발신자 정보
         const sentFrom = new Sender('kudogEmail@kudog.email', 'kudog');
 
+        /**
+         * recipient도 필수,
+         * variable 내에서 email 속성도 필수
+         * 중복되지만 어쩔 수 없음
+         */
         // 수신자
         const recipient1 = [
             new Recipient('cksgh1735@gmail.com', 'park chanho1'),
@@ -28,36 +33,56 @@ export async function sendMail(
             new Recipient('cksgh1735@naver.com', 'park chanho2'),
         ];
 
-        const variable = [
+        const variable1 = [
+            {
+                email: 'cksgh1735@gmail.com',
+                substitutions: [
+                    {
+                        var: 'data',
+                        value: 'https://cs.korea.ac.kr/_res/editor_image/2022/10/OEuKOTXVtVmIfAQHhGzt.jpg',
+                    },
+                    {
+                        var: 'html',
+                        value: '<h1>테스트입니다.</h1>'
+                    }
+                ],
+            },
+        ];
+        const variable2 = [
             {
                 email: 'cksgh1735@naver.com',
                 substitutions: [
                     {
                         var: 'data',
-                        value: 'https://blog.kakaocdn.net/dn/bz3hii/btrNvMf4atk/rkUiMcHGdKavNFrurRBLL0/img.png',
+                        value: 'https://cs.korea.ac.kr/_res/editor_image/2022/10/OEuKOTXVtVmIfAQHhGzt.jpg',
                     },
+                    {
+                        var: 'html',
+                        value: '<h1>테스트입니다.</h1>'
+                    }
                 ],
             },
         ];
 
+        //to gmail
         const emailParams1 = new EmailParams()
             .setFrom(sentFrom)
             .setTo(recipient1)
-            .setSubject('subject')
-            .setText('hello world')
-            .setHtml('<b>hi naver</b>');
+            .setSubject('test20221004')
+            .setVariables(variable1)
+            .setTemplateId('o65qngkdw53lwr12');
+        //to naver
         const emailParams2 = new EmailParams()
             .setFrom(sentFrom)
             .setTo(recipient2)
             .setSubject('제목입니다')
-            .setVariables(variable)
+            .setVariables(variable2)
             .setTemplateId('o65qngkdw53lwr12');
 
         bulkEmails.push(emailParams1);
         bulkEmails.push(emailParams2);
 
         const response = await mailerSend.email.sendBulk(bulkEmails);
-
         res.send(response);
     } catch (err) {
         logger.error(err.toString());
