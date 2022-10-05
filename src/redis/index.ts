@@ -12,8 +12,8 @@ redisClient.on('connect', () => {
     logger.info('Redis connected!');
 });
 
-redisClient.on('error', (err) => {
-    logger.error('Redis Client Error', err);
+redisClient.on('error', (error) => {
+    logger.error('Redis Client Error', { message: error });
 });
 
 export const redisCli = redisClient.v4;
