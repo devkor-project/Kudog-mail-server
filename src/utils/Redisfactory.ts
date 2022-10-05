@@ -10,7 +10,7 @@ export async function redisFactory(categoryList: string[]): Promise<void> {
         // test를 위해 임시 선언
         const title = '제목'
         const main_text = '공지사항 내용, html도 작동되는지 확인 <h3> work? </h3>'
-        const imgUrl = 'https://cs.korea.ac.kr/_res/editor_image/2022/10/OEuKOTXVtVmIfAQHhGzt.jpg'
+        const imgUrl = 'https://img.stibee.com/24860_1664159708.png'
         const from = '부서'
         const date = '날짜타입 데이터'
 

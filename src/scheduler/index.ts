@@ -3,7 +3,7 @@ import schedule from 'node-schedule'
 import { redisCli } from "@/redis";
 import { bulkSend } from '@/bulkSending';
 import { bulkSendDto } from '@/interface/mailDto';
-import { redisFactory } from '@/utils/Redisfactory';
+import { redisFactory } from '@/utils/redisfactory';
 
 logger.info(`Scheduler has been registered`);
 
@@ -11,7 +11,7 @@ export function mainJob() {
     try {
         //-----test를 위해 임시 처리
         let minuteRule = new schedule.RecurrenceRule();
-        minuteRule.minute = 15; // 배포시 구체적인 시간 설정
+        minuteRule.minute = 59; // 배포시 구체적인 시간 설정
         //-----test를 위해 임시 처리
 
         const specificTimeJob = schedule.scheduleJob(minuteRule, async function () {
@@ -44,5 +44,7 @@ export function mainJob() {
 
     } catch (error) {
         logger.error(`mainJob Scheduler failed, message :`, { message: error });
+    } finally {
+        // to do: redis memory refresh
     }
 }
