@@ -3,7 +3,7 @@ import schedule from 'node-schedule'
 import { redisCli } from "@/redis";
 import { bulkSend } from '@/bulkSending';
 import { bulkSendDto } from '@/interface/mailDto';
-import { redisFactory } from '@/utils/Redisfactory';
+import { redisFactory } from '@/utils/redisfactory';
 
 logger.info(`Scheduler has been registered`);
 
