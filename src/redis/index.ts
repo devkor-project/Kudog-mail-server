@@ -9,7 +9,7 @@ export const redisClient = redis.createClient({
 
 // event listener
 redisClient.on('connect', () => {
-    logger.info('Redis connected!');
+    logger.info('Redis is connected!');
 });
 
 redisClient.on('error', (error) => {
