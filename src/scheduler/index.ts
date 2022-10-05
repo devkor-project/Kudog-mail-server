@@ -23,7 +23,7 @@ export function mainJob() {
             //-----test를 위해 임시 처리
 
             // 2. 각 카테고리 마다 오늘 생성된 모든 공지사항을 담아서 html 생성 후 caching
-            redisFactory(categoryList).then(() => {
+            await redisFactory(categoryList).then(() => {
                 logger.info('redis setting is done');
             })
 
