@@ -8,11 +8,10 @@ import { sendingRequest } from './request';
 export async function sendingAgent(categoryList: string[]) {
     try {
         let subscribeList: any = await userPerCategorySet();
-        subscribeList = filter(subscribeList, categoryList)
-        subscribeList = parseToArray(subscribeList);
+        subscribeList = parseToArray(filter(subscribeList, categoryList));
 
         await sendingRequest(subscribeList);
     } catch (error) {
-        logger.error('sendingAgent Error, message :', { message: Error });
+        logger.error('sendingAgent Error, message :', { message: error.toString() });
     }
 }

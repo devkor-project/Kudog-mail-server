@@ -13,7 +13,7 @@ redisClient.on('connect', () => {
 });
 
 redisClient.on('error', (error) => {
-    logger.error('Redis Client Error', { message: error });
+    logger.error('Redis Client Error', { message: error.toString() });
 });
 
 export const redisCli = redisClient.v4;

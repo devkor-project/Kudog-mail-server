@@ -33,7 +33,7 @@ export function mainJob() {
         })
 
     } catch (error) {
-        logger.error(`mainJob Scheduler failed, message :`, { message: error });
+        logger.error(`mainJob Scheduler failed, message :`, { message: error.toString() });
     } finally {
         // to do: redis memory refresh
     }

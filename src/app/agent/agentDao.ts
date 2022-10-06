@@ -20,7 +20,7 @@ export async function userPerCategorySet() {
         return row[0];
 
     } catch (error) {
-        logger.error(`userPerCategorySet Error, message :`, { message: error })
+        logger.error(`userPerCategorySet Error, message :`, { message: error.toString() })
         return null;
     } finally {
         await connection.release();
