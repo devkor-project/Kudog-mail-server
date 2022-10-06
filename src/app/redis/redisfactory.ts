@@ -1,5 +1,5 @@
 import logger from "@/config/winston"
-import { redisCli } from "@/redis"
+import { redisCli } from "@/app/redis"
 
 export async function redisFactory(categoryList: string[]): Promise<void> {
 
@@ -36,7 +36,7 @@ export async function redisFactory(categoryList: string[]): Promise<void> {
         // }
         // loop 끝나면 contents 완성    
         await redisCli.set(category, contents).then(() => {
-            logger.info(`category : "${category}" done`)
+            logger.info(`category : "${category}" | Redis Caching is done`)
         })
     }
 

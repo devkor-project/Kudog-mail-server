@@ -1,12 +1,12 @@
 import { bulkSendDto } from "@/interface/mailDto";
-import { redisCli } from '@/redis';
+import { redisCli } from '@/app/redis';
 import { EmailParams, Sender, Recipient } from 'mailer-send-ts';
 import mailerSend from '@/utils/mailerSend';
 import logger from "@/config/winston";
 
 export async function bulkSend(data: bulkSendDto) {
     try {
-        const { categorySet, userEmailList } = data;
+        const { categorySet, emailList } = data;
 
         let mainHTML = ''
         for (let category of categorySet) {
@@ -21,7 +21,7 @@ export async function bulkSend(data: bulkSendDto) {
         // 발신자 정보
         const sentFrom = new Sender('kudogEmail@kudog.email', 'kudog');
 
-        for (let email of userEmailList) {
+        for (let email of emailList) {
             logger.info(`${email} is added`)
 
             const recipient = [new Recipient(email)];
