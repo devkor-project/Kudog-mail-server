@@ -1,8 +1,8 @@
 import '@/config/env';
 import express from '@/config/express';
 import logger from '@/config/winston';
-import { mainJob } from '@/scheduler';
-import { redisClient } from '@/redis'
+import { mainJob } from '@/app/scheduler';
+import { redisClient } from '@/app/redis'
 
 const port = process.env.PORT || 8080;
 express().listen(port);
