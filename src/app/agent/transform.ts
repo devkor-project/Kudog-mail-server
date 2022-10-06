@@ -23,7 +23,7 @@ export function parseToArray(subscribeList) {
 
         return subscribeList;
     } catch (error) {
-        logger.error(`parseToArray Error, message : ${error.toString()}`, { message: Error });
+        logger.error(`parseToArray Error, message : ${error.toString()}`, { message: error.toString() });
     }
 }
 
@@ -41,6 +41,6 @@ export function filter(subscribeList, categoryList: string[]) {
         }
         return bucket;
     } catch (error) {
-        logger.error(`filter Error, message : ${error.toString()}`, { message: error });
+        logger.error(`filter Error, message : ${error.toString()}`, { message: error.toString() });
     }
 }

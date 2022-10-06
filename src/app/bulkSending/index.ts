@@ -53,6 +53,6 @@ export async function bulkSend(data: bulkSendDto) {
         })
 
     } catch (error) {
-        logger.error(`Error! bulksend, message :`, { message: error });
+        logger.error(`Error! bulksend, message :`, { message: error.toString() });
     }
 }

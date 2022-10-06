@@ -12,6 +12,6 @@ export async function sendingRequest(subscribeList) {
             await bulkSend(data).then(() => logger.info(`categorySet : ${categorySet} | Sending is done`));
         }
     } catch (error) {
-        logger.error('sendingRequest Error, message :', { message: Error });
+        logger.error('sendingRequest Error, message :', { message: error.toString() });
     }
 }
