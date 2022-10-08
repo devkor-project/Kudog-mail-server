@@ -25,7 +25,7 @@ export function mainJob() {
             })
 
             await sendingAgent(categoryList);
-        }).then(logger.info('scheduler 작업이 성공적으로 완료되었습니다.'))
+        }).then(() => { logger.info('scheduler 작업이 성공적으로 완료되었습니다.') });
 
     } catch (error) {
         logger.error(`mainJob Scheduler failed, message :`, { message: error.toString() });
