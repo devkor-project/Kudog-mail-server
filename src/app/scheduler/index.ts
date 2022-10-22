@@ -25,7 +25,7 @@ export function mainJob() {
             })
 
             await sendingAgent(categoryList);
-        }).then(() => { logger.info('🎉 Schedule Job is Done! 🎉') });
+        });
 
     } catch (error) {
         logger.error(`mainJob Scheduler failed, message :`, { message: error.toString() });
