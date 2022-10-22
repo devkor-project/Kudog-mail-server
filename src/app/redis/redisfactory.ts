@@ -36,7 +36,7 @@ export async function redisFactory(categoryList: string[]): Promise<void> {
         // }
         // loop 끝나면 contents 완성    
         await redisCli.set(category, contents).then(() => {
-            logger.info(`category : "${category}" | Redis Caching is done`)
+            logger.info(`✅ category : "${category}" Add To Redis Cache`)
         })
     }
 
