@@ -10,30 +10,6 @@ const logDir = 'logs';
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
-const config = {
-    levels: {
-        error: 0,
-        debug: 1,
-        warn: 2,
-        info: 3,
-        data: 4,
-        verbose: 5,
-        silly: 6,
-        custom: 7
-    },
-    colors: {
-        error: 'red',
-        debug: 'blue',
-        warn: 'yellow',
-        info: 'green',
-        data: 'magenta',
-        verbose: 'cyan',
-        silly: 'grey',
-        custom: 'yellow'
-    }
-}
-
-addColors(config.colors);
 
 const dailyRotateFileTransport = new transports.DailyRotateFile({
     level: 'debug',
