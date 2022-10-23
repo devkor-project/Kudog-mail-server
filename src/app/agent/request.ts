@@ -9,7 +9,7 @@ export async function sendingRequest(subscribeList) {
             const { categorySet, emailList } = subscribeList[i];
             const data: bulkSendDto = { categorySet, emailList }
 
-            await bulkSend(data).then(() => logger.info(`categorySet : ${categorySet} | Sending is done`));
+            await bulkSend(data).then(() => logger.info(`🚀categorySet : ${categorySet} | [${i + 1}] Sending is done🚀`));
         }
     } catch (error) {
         logger.error('sendingRequest Error, message :', { message: error.toString() });
