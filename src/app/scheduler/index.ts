@@ -24,7 +24,9 @@ export function mainJob() {
                 logger.info('📦 Redis Caching is Done 📦');
             })
 
-            await sendingAgent(categoryList);
+            await sendingAgent(categoryList).then(() => {
+                logger.info('🎉 Schedule Job is successfully done! 🎉')
+            })
         });
 
     } catch (error) {
