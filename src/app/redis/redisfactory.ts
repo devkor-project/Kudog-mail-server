@@ -7,6 +7,7 @@ export async function redisFactory(categoryList: string[]): Promise<void> {
 
     for (let category of categoryList) {
         // <To do> DB에서 저장된 공지사항 내용들 가져오기
+        // const contents : MailContentDto = await getContent(category);
         // test를 위해 임시 선언
         const title = '제목'
         const main_text = '공지사항 내용, html도 작동되는지 확인 <h3> work? </h3>'
