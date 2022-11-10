@@ -1,43 +1,40 @@
 import logger from "@/config/winston"
 import { redisCli } from "@/app/redis"
+import { getNotices } from "@/utils/dao"
+import { RowDataPacket } from "mysql2";
 
-export async function redisFactory(categoryList: string[]): Promise<void> {
-
+export async function redisFactory(categoryList): Promise<void> {
     let contents: string = ''
+    const { title, content, writer, date, provider } = { title: "title", content: "content", writer: "writer", date: "date", provider: "provider" };
 
     for (let category of categoryList) {
-        // <To do> DB에서 저장된 공지사항 내용들 가져오기
-        // test를 위해 임시 선언
-        const title = '제목'
-        const main_text = '공지사항 내용, html도 작동되는지 확인 <h3> work? </h3>'
-        const imgUrl = 'https://img.stibee.com/24860_1664159708.png'
-        const from = '부서'
-        const date = '날짜타입 데이터'
+        const notices = await getNotices(category);
+        for (let i = 0; i < notices.length; i++) {
+            const notice = notices[i].valueOf()
 
-        //이 후 loop 타면서 같은 카테고리 내 공지사항 쭉 추가
-        // for(~~~~){
-        contents +=
-            `
+            contents +=
+                `
             <div>
                 <head> 
-                    <h1>${title}</h1>
-                    from [${from}] (${date}) 
+                    <h1>${notice[title]}</h1>
+                    from [${notice[writer]}] (${notice[date]}) 
                 </head>
             </div>
             <div>
                 <body>
-                    <img src=${imgUrl}>
                 <br>
-                    ${main_text}
+                    ${notice[content]}
                 <br>
                 </body>
             </div>
             `
-        // }
-        // loop 끝나면 contents 완성    
+        }
+
         await redisCli.set(category, contents).then(() => {
             logger.info(`✅ category : "${category}" Add To Redis Cache`)
         })
+
+
     }
 
 }

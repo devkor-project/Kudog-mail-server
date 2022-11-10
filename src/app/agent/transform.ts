@@ -27,6 +27,20 @@ export function parseToArray(subscribeList) {
     }
 }
 
+
+export function parseToStringArray(categoryList): string[] {
+    try {
+        const box: string[] = [];
+        for (let i = 0; i < categoryList.length; i++) {
+            box.push(categoryList[i]['categoryName']);
+        }
+
+        return box;
+    } catch (error) {
+        logger.error(`parseToArray Error, message : ${error.toString()}`, { message: error.toString() });
+    }
+}
+
 export function filter(subscribeList, categoryList: string[]) {
     try {
         let bucket = [];

@@ -1,7 +1,7 @@
 import logger from '@/config/winston';
 import { bulkSendDto } from '@/interface/mailDto';
 import { bulkSend } from '../bulkSending';
-import { userPerCategorySet } from './agentDao';
+import { userPerCategorySet } from '../../utils/dao';
 import { parseToArray, filter } from './transform';
 import { sendingRequest } from './request';
 
