@@ -1,31 +1,28 @@
 import logger from '@/config/winston';
 import schedule from 'node-schedule'
-import { redisCli } from "@/app/redis";
-import { bulkSend } from '@/app/bulkSending';
-import { bulkSendDto } from '@/interface/mailDto';
+import { parseToStringArray } from '@/app/agent/transform';
 import { redisFactory } from '@/app/redis/redisfactory';
 import { sendingAgent } from '@/app/agent/sendingAgent';
+import { getCategoryOnToday } from '@/utils/dao';
 
 logger.info(`Scheduler has been registered`);
 
-export function mainJob() {
+export async function mainJob() {
     try {
         let minuteRule = new schedule.RecurrenceRule();
-        minuteRule.minute = 47; // 배포시 구체적인 시간 설정
+        minuteRule.minute = 8; // 배포시 구체적인 시간 설정
 
         const specificTimeJob = schedule.scheduleJob(minuteRule, async function () {
             logger.info('🎉 Start Schedule Job! 🎉');
 
-            //-----test를 위해 임시 처리
-            // 1. <To do> "오늘 생성된 공지사항"들의 카테고리 추출
-            // const categoryList : string[] = await getCategoryOnToday();
-            const categoryList: string[] = ['testA', 'testB', 'testC'] // *임시 선언*
+            const categoryList: string[] = await getCategoryOnToday();
+            const categoryStringArray = parseToStringArray(categoryList);
 
-            await redisFactory(categoryList).then(() => {
+            await redisFactory(categoryStringArray).then(() => {
                 logger.info('📦 Redis Caching is Done 📦');
             })
 
-            await sendingAgent(categoryList).then(() => {
+            await sendingAgent(categoryStringArray).then(() => {
                 logger.info('🎉 Schedule Job is successfully done! 🎉')
             })
         });
