@@ -5,22 +5,8 @@ import logger from "@/config/winston";
 
 export async function sendCode(email: string, code: string) {
   try {
-    const mainHTML = `<!DOCTYPE html>
-<html>
-
-<head>
-  <title>auth code for kudog service</title>
-</head>
-
-<body>
-  <h3>${12344}</h3>
-</body>
-
-</html>`;
-
     // 발신자 정보
     const sentFrom = new Sender('kudogEmail@kudog.email', 'kudog');
-
 
     logger.info(`${code} is sent to ${email}`)
 
@@ -31,8 +17,8 @@ export async function sendCode(email: string, code: string) {
         email: email,
         substitutions: [
           {
-            var: 'html',
-            value: mainHTML
+            var: 'variable',
+            value: code
           }
         ],
       },
@@ -43,7 +29,7 @@ export async function sendCode(email: string, code: string) {
       .setTo(recipient)
       .setSubject('[Kudog] 이메일 인증 코드입니다.')
       .setVariables(variable)
-      .setTemplateId('o65qngkdw53lwr12');
+      .setTemplateId('0r83ql32eyx4zw1j');
     paramsArray.push(emailParams);
     await mailerSend.email.sendBulk(paramsArray).then((e) => {
       logger.info(e);

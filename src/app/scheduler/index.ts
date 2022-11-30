@@ -10,7 +10,7 @@ logger.info(`Scheduler has been registered`);
 export async function mainJob() {
     try {
         let minuteRule = new schedule.RecurrenceRule();
-        minuteRule.minute = 8; // 배포시 구체적인 시간 설정
+        minuteRule.hour = 9; // 배포시 구체적인 시간 설정
 
         const specificTimeJob = schedule.scheduleJob(minuteRule, async function () {
             logger.info('🎉 Start Schedule Job! 🎉');
