@@ -7,7 +7,8 @@
     "test": "jest --detectOpenHandles",
     "dev": "NODE_ENV=development ts-node  -r tsconfig-paths/register ./src ./src/index.ts",
     "prebuild": "rm -rf dist",
-    "build": "NODE_ENV=production tsc -p . && tsc-alias -p tsconfig.json"
+    "build": "NODE_ENV=production tsc -p . && tsc-alias -p tsconfig.json",
+    "start": " NODE_ENV=production node dist/src/index.js"
   },
   "repository": {
     "type": "git",
