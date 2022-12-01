@@ -11,6 +11,7 @@ export async function userPerCategorySet() {
                 select distinct U.userId, U.email , group_concat(distinct categoryName) as categorySet from User U
                 inner join CategoryPerUser CP on U.userId = CP.userId
                 inner join Category C on CP.categoryId = C.categoryId
+                where U.status != 'N'
                 group by U.userId
             ) M
         group by categorySet;
@@ -27,7 +28,6 @@ export async function userPerCategorySet() {
     }
 }
 
-//임의 작성, 동작x
 export async function getCategoryOnToday(): Promise<string[]> {
     const connection = await pool.getConnection();
     try {
