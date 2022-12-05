@@ -54,7 +54,7 @@ export async function getNotices(categoryName: string, provider: string): Promis
     try {
         const query: string =
             `
-            select title, content, writer, date_format(date, '%Y-%m-%d'), N.provider from Notice N inner join Category C on N.categoryId = C.categoryId
+            select title, content, writer, date_format(date, '%Y-%m-%d') as date, N.provider from Notice N inner join Category C on N.categoryId = C.categoryId
             where categoryName =  '${categoryName}' and N.provider = '${provider}' and date = current_date();
         `;
 

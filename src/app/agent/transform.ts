@@ -54,8 +54,6 @@ export function concatCategory(categoryList) {
             bucket.push(provider + categoryName);
         }
 
-        console.log(bucket);
-
         return bucket;
     } catch (error) {
         logger.error(`concatCategory Error, message : ${error.toString()}`, { message: error.toString() });
