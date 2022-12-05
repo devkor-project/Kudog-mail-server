@@ -9,17 +9,19 @@ logger.info(`Scheduler has been registered`);
 
 export async function mainJob() {
     try {
-        logger.info('🎉 Start Schedule Job! 🎉');
+        let hourRule = new schedule.RecurrenceRule();
+        hourRule.hour = 17;
 
-        const categoryList: Array<[string, string]> = await getCategoryOnToday();
-
-        await redisFactory(categoryList).then(() => {
-            logger.info('📦 Redis Caching is Done 📦');
-        })
-
-        await sendingAgent(concatCategory(categoryList)).then(() => {
-            logger.info('🎉 Schedule Job is successfully done! 🎉')
-        })
+        const specificTimeJob = schedule.scheduleJob(hourRule, async function () {
+            logger.info('🎉 Start Schedule Job! 🎉');
+            const categoryList: Array<[string, string]> = await getCategoryOnToday();
+            await redisFactory(categoryList).then(() => {
+                logger.info('📦 Redis Caching is Done 📦');
+            })
+            await sendingAgent(concatCategory(categoryList)).then(() => {
+                logger.info('🎉 Schedule Job is successfully done! 🎉')
+            })
+        });
 
     } catch (error) {
         logger.error(`mainJob Scheduler failed, message :`, { message: error.toString() });
