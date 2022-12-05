@@ -54,7 +54,7 @@ export async function getNotices(category: string): Promise<Object[]> {
     try {
         const query: string =
             `
-            select title, content, writer, date, provider from Notice inner join Category C on Notice.categoryId = C.categoryId 
+            select title, content, writer, date, N.provider from Notice N inner join Category C on N.categoryId = C.categoryId
             where categoryName =  '${category}' and date = current_date();
         `;
 
