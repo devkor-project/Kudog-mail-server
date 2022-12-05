@@ -8,7 +8,7 @@ export async function userPerCategorySet() {
             `
         select distinct categorySet, group_concat(email) as emailList from
             (
-                select distinct U.userId, U.email , group_concat(distinct categoryName) as categorySet from User U
+                select distinct U.userId, U.email , group_concat(distinct C.provider, categoryName) as categorySet from User U
                 inner join CategoryPerUser CP on U.userId = CP.userId
                 inner join Category C on CP.categoryId = C.categoryId
                 where U.status != 'N'
@@ -28,13 +28,13 @@ export async function userPerCategorySet() {
     }
 }
 
-export async function getCategoryOnToday(): Promise<string[]> {
+export async function getCategoryOnToday(): Promise<Array<[string, string]>> {
     const connection = await pool.getConnection();
     try {
         const query: string =
             `
-            select distinct categoryName from Notice inner join Category C on Notice.categoryId = C.categoryId
-            where date = current_date();;
+            select distinct categoryName, Notice.provider from Notice inner join Category C on Notice.categoryId = C.categoryId
+            where date = current_date();
         `;
 
         const row = await connection.query(query);
@@ -49,13 +49,13 @@ export async function getCategoryOnToday(): Promise<string[]> {
 }
 
 
-export async function getNotices(category: string): Promise<Object[]> {
+export async function getNotices(categoryName: string, provider: string): Promise<Object[]> {
     const connection = await pool.getConnection();
     try {
         const query: string =
             `
             select title, content, writer, date, N.provider from Notice N inner join Category C on N.categoryId = C.categoryId
-            where categoryName =  '${category}' and date = current_date();
+            where categoryName =  '${categoryName}' and N.provider = '${provider}' and date = current_date();
         `;
 
         const row = await connection.query(query);
