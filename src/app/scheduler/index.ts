@@ -1,6 +1,6 @@
 import logger from '@/config/winston';
 import schedule from 'node-schedule'
-import { parseToStringArray } from '@/app/agent/transform';
+import { concatCategory } from '../agent/transform';
 import { redisFactory } from '@/app/redis/redisfactory';
 import { sendingAgent } from '@/app/agent/sendingAgent';
 import { getCategoryOnToday } from '@/utils/dao';
@@ -9,20 +9,16 @@ logger.info(`Scheduler has been registered`);
 
 export async function mainJob() {
     try {
-        let minuteRule = new schedule.RecurrenceRule();
-        minuteRule.hour = 9; // 배포시 구체적인 시간 설정
+        let hourRule = new schedule.RecurrenceRule();
+        hourRule.hour = 17;
 
-        const specificTimeJob = schedule.scheduleJob(minuteRule, async function () {
+        const specificTimeJob = schedule.scheduleJob(hourRule, async function () {
             logger.info('🎉 Start Schedule Job! 🎉');
-
-            const categoryList: string[] = await getCategoryOnToday();
-            const categoryStringArray = parseToStringArray(categoryList);
-
-            await redisFactory(categoryStringArray).then(() => {
+            const categoryList: Array<[string, string]> = await getCategoryOnToday();
+            await redisFactory(categoryList).then(() => {
                 logger.info('📦 Redis Caching is Done 📦');
             })
-
-            await sendingAgent(categoryStringArray).then(() => {
+            await sendingAgent(concatCategory(categoryList)).then(() => {
                 logger.info('🎉 Schedule Job is successfully done! 🎉')
             })
         });

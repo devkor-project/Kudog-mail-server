@@ -4,37 +4,32 @@ import { getNotices } from "@/utils/dao"
 import { RowDataPacket } from "mysql2";
 
 export async function redisFactory(categoryList): Promise<void> {
-    let contents: string = ''
     const { title, content, writer, date, provider } = { title: "title", content: "content", writer: "writer", date: "date", provider: "provider" };
 
     for (let category of categoryList) {
-        const notices = await getNotices(category);
+        const { categoryName, provider } = category;
+        let contents: string = ''
+        const notices = await getNotices(categoryName, provider);
         for (let i = 0; i < notices.length; i++) {
             const notice = notices[i].valueOf()
 
             contents +=
                 `
-            <div>
-                <head> 
+                <div class="inner">
                     <h1>${notice[title]}</h1>
-                    from [${notice[writer]}] (${notice[date]}) 
-                </head>
-            </div>
-            <div>
-                <body>
-                <br>
+                    <h3>${provider} [${categoryName}] </h3> 
+                    <h3>${notice[date]}</h3> 
+                    <hr>
+
                     ${notice[content]}
-                <br>
-                </body>
-            </div>
-            `
+                </div>
+                    <br><br><br><br><br><br><br><br><br><hr><hr><br><br>
+                `
         }
 
-        await redisCli.set(category, contents).then(() => {
-            logger.info(`✅ category : "${category}" Add To Redis Cache`)
+        await redisCli.set(provider + categoryName, contents).then(() => {
+            logger.info(`✅ category : "${provider + categoryName}" Add To Redis Cache`)
         })
-
-
     }
 
 }

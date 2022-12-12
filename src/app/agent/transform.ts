@@ -27,20 +27,6 @@ export function parseToArray(subscribeList) {
     }
 }
 
-
-export function parseToStringArray(categoryList): string[] {
-    try {
-        const box: string[] = [];
-        for (let i = 0; i < categoryList.length; i++) {
-            box.push(categoryList[i]['categoryName']);
-        }
-
-        return box;
-    } catch (error) {
-        logger.error(`parseToArray Error, message : ${error.toString()}`, { message: error.toString() });
-    }
-}
-
 export function filter(subscribeList, categoryList: string[]) {
     try {
         let bucket = [];
@@ -56,5 +42,20 @@ export function filter(subscribeList, categoryList: string[]) {
         return bucket;
     } catch (error) {
         logger.error(`filter Error, message : ${error.toString()}`, { message: error.toString() });
+    }
+}
+
+export function concatCategory(categoryList) {
+    try {
+        let bucket = [];
+
+        for (let i = 0; i < categoryList.length; i++) {
+            const { categoryName, provider } = categoryList[i];
+            bucket.push(provider + categoryName);
+        }
+
+        return bucket;
+    } catch (error) {
+        logger.error(`concatCategory Error, message : ${error.toString()}`, { message: error.toString() });
     }
 }
