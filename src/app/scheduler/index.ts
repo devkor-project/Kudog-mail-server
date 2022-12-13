@@ -10,7 +10,7 @@ logger.info(`Scheduler has been registered`);
 export async function mainJob() {
     try {
         let hourRule = new schedule.RecurrenceRule();
-        hourRule.hour = 17;
+        hourRule.hour = 9;
 
         const specificTimeJob = schedule.scheduleJob(hourRule, async function () {
             logger.info('🎉 Start Schedule Job! 🎉');
