@@ -9,10 +9,7 @@ logger.info(`Scheduler has been registered`);
 
 export async function mainJob() {
     try {
-        let hourRule = new schedule.RecurrenceRule();
-        hourRule.hour = 17;
-
-        const specificTimeJob = schedule.scheduleJob(hourRule, async function () {
+        const specificTimeJob = schedule.scheduleJob('0 0 9 * * *', async function () {
             logger.info('🎉 Start Schedule Job! 🎉');
             const categoryList: Array<[string, string]> = await getCategoryOnToday();
             await redisFactory(categoryList).then(() => {
