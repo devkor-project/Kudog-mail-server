@@ -6,9 +6,9 @@ export async function userPerCategorySet() {
     try {
         const query: string =
             `
-        select distinct categorySet, group_concat(email) as emailList from
+        select distinct categorySet, group_concat(receiveEmail) as emailList from
             (
-                select distinct U.userId, U.email , group_concat(distinct C.provider, categoryName) as categorySet from User U
+                select distinct U.userId, U.receiveEmail , group_concat(distinct C.provider, categoryName) as categorySet from User U
                 inner join CategoryPerUser CP on U.userId = CP.userId
                 inner join Category C on CP.categoryId = C.categoryId
                 where U.status != 'N'
