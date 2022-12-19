@@ -28,6 +28,7 @@ export async function redisFactory(categoryList): Promise<void> {
         }
 
         await redisCli.set(provider + categoryName, contents).then(() => {
+            redisCli.expire(provider + categoryName, 3600);
             logger.info(`✅ category : "${provider + categoryName}" Add To Redis Cache`)
         })
     }
