@@ -12,6 +12,7 @@ export async function bulkSend(data: bulkSendDto) {
         for (let category of categorySet) {
             // get from Redis
             const subHTML = await redisCli.get(category);
+            if (!subHTML) continue;
             mainHTML += subHTML;
         }
 
